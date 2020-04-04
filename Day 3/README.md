@@ -1,6 +1,6 @@
 # Calory Intake App
 <p align="center">
-    <img src="Screenshot.gif" width="480" max-width="90%" alt=“Calory Intake App" />
+    <img src="Screenshot.gif" width="480" max-width="90%" alt="Calory Intake App" />
 </p>
 <p align="center">
     <img src="https://img.shields.io/badge/Swift-5.2-orange.svg" />
