@@ -16,3 +16,7 @@ iDine by Paul Hudson
 * List
 * Section
 * NavigationLink
+
+Day 6
+* EnvironmentObject 
+* TabbedView

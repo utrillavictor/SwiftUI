@@ -7,9 +7,15 @@
 //
 
 import SwiftUI
+import Combine
 
-class Order {
-    var items = [MenuItem]()
+class Order: ObservableObject {
+    var items = [MenuItem]() {
+        didSet {
+            didChange.send()
+        }
+    }
+    var didChange = PassthroughSubject<Void, Never>()
 
     var total: Int {
         if items.count > 0 {
