@@ -22,6 +22,12 @@ struct AppView: View {
                     Image(systemName: "square-and-pencil")
                     Text("Order")
                 }
+            
+            FavoriteView()
+                .tabItem {
+                    Image(systemName: "favorite")
+                    Text("Favorite")
+                }
         }
     }
 }

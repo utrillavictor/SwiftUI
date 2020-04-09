@@ -20,3 +20,9 @@ iDine by Paul Hudson
 Day 6
 * EnvironmentObject 
 * TabbedView
+
+Day 7
+* Picker
+* Alert
+* IndexSet
+* NavBarItems

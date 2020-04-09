@@ -34,11 +34,21 @@ struct ItemDetail: View {
             }) {
                 Text("Order this")
                     .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.all, 10)
+                    .padding([.trailing, .leading], 20)
+                    .background(Color.green)
+                    .cornerRadius(20)
             }
             
             Spacer()
         }
         .navigationBarTitle(Text(item.name), displayMode: .inline)
+        .navigationBarItems(trailing:
+            Button("Favorite") {
+                
+            }
+        )
     }
 }
 

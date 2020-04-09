@@ -21,18 +21,22 @@ struct OrderView: View {
                             Spacer()
                             Text("$ \(item.price)")
                         }
-                    }
+                    }.onDelete(perform: deleteItems)
                 }
                 
                 Section {
-                    NavigationLink(destination: Text("Check out")) {
+                    NavigationLink(destination: CheckoutView()) {
                         Text("Place Order")
                     }
-                }
+                }.disabled(order.items.isEmpty)
             }
             .navigationBarTitle(Text("Order"))
             .listStyle(GroupedListStyle())
         }
+    }
+    
+    func deleteItems(at offsets: IndexSet) {
+        order.items.remove(atOffsets: offsets)
     }
 }
 
