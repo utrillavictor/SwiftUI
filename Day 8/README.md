@@ -16,3 +16,7 @@ WeSplit SwiftUI Tutorial by Paul Hudson
 * ForEach
 * Picker
 
+Day 9
+* Reading text from TextField
+* Add picker in a form
+* Segmented control style
