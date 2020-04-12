@@ -10,22 +10,10 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var checkAmount = ""
-    @State private var numberOfPeople = 2
+    @State private var numberOfPeople = "2"
     @State private var tipPercentage = 2
     
     let tipPercentages = [10, 15, 20, 25, 0]
-    
-    var totalPerPerson: Double {
-        let peopleCount = Double(numberOfPeople + 2)
-        let tipSelection = Double(tipPercentages[tipPercentage])
-        let orderAmount = Double(checkAmount) ?? 0
-        
-        let tipValue = orderAmount / 100 * tipSelection
-        let grandTotal = orderAmount + tipValue
-        let amountPerPerson = grandTotal / peopleCount
-        
-        return amountPerPerson
-    }
     
     var body: some View {
         NavigationView {
@@ -34,11 +22,8 @@ struct ContentView: View {
                     TextField("Amount", text: $checkAmount)
                         .keyboardType(.decimalPad)
                     
-                    Picker("Select Number of People:", selection: $numberOfPeople) {
-                        ForEach(2..<100) {
-                            Text("\($0) people")
-                        }
-                    }
+                    TextField("Number Of People:", text: $numberOfPeople)
+                        .keyboardType(.numberPad)
                 }
                 
                 Section(header: Text("How much tip do you want to leave?")) {
@@ -47,15 +32,32 @@ struct ContentView: View {
                             Text("\(self.tipPercentages[$0])%")
                         }
                     }
-                .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(SegmentedPickerStyle())
                 }
                 
-                Section {
-                    Text("$\(totalPerPerson, specifier: "%.2f")")
+                Section(header: Text("Amount per person")) {
+                    Text("$\(grandTotal(perPerson: true), specifier: "%.2f")")
+                }
+                
+                Section(header:
+                    Text("Total Amount")
+                        .font(.title)
+                ) {
+                    Text("$\(grandTotal(perPerson: false), specifier: "%.2f")")
                 }
             }
             .navigationBarTitle("WeSplit")
         }
+    }
+    
+    func grandTotal(perPerson: Bool) -> Double {
+        let count = Double(numberOfPeople) ?? 1
+        let numberOfPeople = count >= 1 ? count : 1
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        let orderAmount = Double(checkAmount) ?? 0
+        let tipValue = orderAmount / 100 * tipSelection
+        let total = orderAmount + tipValue
+        return perPerson ? (total / numberOfPeople) : total
     }
 }
 
