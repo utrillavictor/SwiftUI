@@ -13,3 +13,7 @@ Guess The Flag SwiftUI Tutorial by Paul Hudson
 * Gradients
 * Buttons and images
 * Alert
+
+* Stacking up buttons
+* Showing alert
+* Styling flags
