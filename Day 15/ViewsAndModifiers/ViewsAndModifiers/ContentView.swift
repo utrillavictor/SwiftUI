@@ -8,6 +8,15 @@
 
 import SwiftUI
 
+struct LargeBlueTitle: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.blue)
+            .font(.largeTitle)
+    }
+}
+
 struct Watermark: ViewModifier {
     var text: String
     
@@ -28,13 +37,22 @@ extension View {
     func watermarked(with text: String) -> some View {
         self.modifier(Watermark(text: text))
     }
+    
+    func largeBlueTitle() -> some View {
+        self.modifier(LargeBlueTitle())
+    }
 }
 
 struct ContentView: View {
     var body: some View {
-        Color.blue
-            .frame(width: 200, height: 300)
-            .watermarked(with: "Hacking With Swift")
+        VStack {
+            Color.blue
+                .frame(width: 200, height: 300)
+                .watermarked(with: "Hacking With Swift")
+            
+            Text("100 Days Challenge")
+                .largeBlueTitle()
+        }
     }
 }
 
