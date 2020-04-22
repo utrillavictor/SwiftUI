@@ -1,4 +1,7 @@
 # BetterRest App
+<p align="cente">
+    <img src="Screenshot.png" width="460" max-width="90%" alt="BetterRest App" />
+</p>
 <p align="center">
     <img src="https://img.shields.io/badge/Swift-5.2-orange.svg" />
     <img src="https://img.shields.io/badge/xcode-11.4-brightgreen.svg" />
@@ -12,3 +15,6 @@ BetterRest SwiftUI Tutorial by Paul Hudson
 * DatePicker
 * DateFormatter
 * Intro to CreateML
+
+* Connecting Core ML model
+* Added basic user interface
