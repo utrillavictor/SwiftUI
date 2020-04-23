@@ -18,3 +18,8 @@ BetterRest SwiftUI Tutorial by Paul Hudson
 
 * Connecting Core ML model
 * Added basic user interface
+
+Wrap up
+* Replaced VStacks with Sections
+* Replaced Stepper with Picker for #cups
+* Removed calculate button
