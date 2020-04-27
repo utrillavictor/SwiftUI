@@ -1,0 +1,11 @@
+.DS_STORE
+
+## Build generation
+build/
+DerivedData/
+
+## Various Settings
+xcuserdata/
+
+### Xcode ###
+*.xcodeproj/*
