@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var score = 0
     
     @State private var errorTitle = ""
     @State private var errorMessage = ""
@@ -29,12 +30,17 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                
+                Text("Your score is: \(score)")
             }
             .navigationBarTitle(rootWord)
             .onAppear(perform: startGame)
             .alert(isPresented: $showingError) {
                 Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
+            .navigationBarItems(leading: Button(action: startGame) {
+                Text("Restart")
+            })
         }
     }
     
@@ -55,6 +61,7 @@ struct ContentView: View {
             return wordError(title: "Word not possible", message: "That isn't a real word.")
         }
         
+        score += answer.count + usedWords.count * 2
         usedWords.insert(answer, at: 0)
         newWord = ""
     }
@@ -64,6 +71,7 @@ struct ContentView: View {
             if let startWords = try? String(contentsOf: startWordsURL) {
                 let allWords = startWords.components(separatedBy: "\n")
                 rootWord = allWords.randomElement() ?? "silkworm"
+                score = 0
                 return
             }
         }
@@ -89,6 +97,7 @@ struct ContentView: View {
     }
     
     func isReal(word: String) -> Bool {
+        guard word != rootWord, word.count >= 3 else { return false }
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")

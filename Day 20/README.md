@@ -16,4 +16,5 @@ WordScramble SwiftUI
 * UITextChecker
 
 * TextField
-* Wrap up things
+* Wrap up
+* Challenge
