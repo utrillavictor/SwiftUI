@@ -8,38 +8,43 @@
 
 import SwiftUI
 
+struct CornerRotateModifier: ViewModifier {
+    let amount: Double
+    let anchor: UnitPoint
+    
+    func body(content: Content) -> some View {
+        content.rotationEffect(.degrees(amount), anchor: anchor)
+            .clipped()
+    }
+}
+
+extension AnyTransition {
+    static var pivot: AnyTransition {
+        .modifier(
+            active: CornerRotateModifier(amount: -90, anchor: .topLeading),
+            identity: CornerRotateModifier(amount: 0, anchor: .topLeading)
+        )
+    }
+}
+
 struct ContentView: View {
-    @State private var animationAmount: CGFloat = 1
-    @State private var rotationAnimationAmount = 0.0
+    let letters = Array("Hello SwiftUI")
+    @State private var isShowingRed = false
     
     var body: some View {
         VStack {
-            Stepper("Scale Amount", value: $animationAmount.animation(
-                Animation.easeOut(duration: 1)
-                .repeatCount(3, autoreverses: true)
-            ), in: 1...10)
-            
-            Spacer()
-            
             Button("Tap Me") {
-                self.animationAmount += 1
-            }
-            .padding(40)
-            .background(Color.red)
-            .foregroundColor(.white)
-            .clipShape(Circle())
-            .scaleEffect(animationAmount)
-            
-            Button("Tap Me Too") {
-                withAnimation(.interpolatingSpring(stiffness: 5, damping: 1)) {
-                    self.rotationAnimationAmount += 360
+                withAnimation {
+                    self.isShowingRed.toggle()
                 }
             }
-            .padding(40)
-            .background(Color.red)
-            .foregroundColor(.white)
-            .clipShape(Circle())
-            .rotation3DEffect(.degrees(rotationAnimationAmount), axis: (x: 0, y: 1, z: 0))
+            
+            if isShowingRed {
+                Rectangle()
+                    .fill(Color.red)
+                    .frame(width: 200, height:  200)
+                    .transition(.pivot)
+            }
         }
     }
 }

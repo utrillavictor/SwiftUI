@@ -10,3 +10,6 @@ Animations
 ## Covered
 * Intro to animations
 * Implicit and explicit animations
+
+* Animation gestures
+* Custom transitions
