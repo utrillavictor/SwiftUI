@@ -31,6 +31,9 @@ struct ContentView: View {
     @State private var message = ""
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
+    @State private var flagsAngle = Array(repeating: 0.0, count: 3)
+    @State private var flagsOpacity = Array(repeating: 1.0, count: 3)
+    @State private var flagsBlur: [CGFloat] = Array(repeating: 0, count: 3)
     
     var body: some View {
         ZStack{
@@ -53,6 +56,10 @@ struct ContentView: View {
                     }) {
                         FlagImage(self.countries[number])
                     }
+                    .rotation3DEffect(.degrees(self.flagsAngle[number]), axis: (x: 0, y: 1, z: 0))
+                    .opacity(self.flagsOpacity[number])
+                    .blur(radius: self.flagsBlur[number])
+                    .animation(.default)
                 }
                 
                 Text("Your score is \(score)")
@@ -74,8 +81,10 @@ struct ContentView: View {
         scoreTitle = number == correctAnswer ? "Correct" : "Wrong"
         if number == correctAnswer {
             score += 1
+            isCorrectAnswer(true)
         } else {
             score = score <= 0 ? 0 : score - 1
+            isCorrectAnswer(false)
         }
         message = number == correctAnswer ? "" : "That's the flag of \(countries[number])"
         showingScore = true
@@ -84,6 +93,23 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        flagsAngle = Array(repeating: 0.0, count: 3)
+        flagsOpacity = Array(repeating: 1.0, count: 3)
+        flagsBlur = Array(repeating: 0, count: 3)
+    }
+    
+    func isCorrectAnswer(_ isIt: Bool) {
+        for flag in 0...2 {
+            if isIt {
+                if flag == correctAnswer {
+                    flagsAngle[flag] = 360
+                } else {
+                    flagsOpacity[flag] = 0.25
+                }
+            } else {
+                flagsBlur[flag] = 5
+            }
+        }
     }
 }
 
