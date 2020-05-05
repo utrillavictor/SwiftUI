@@ -8,60 +8,45 @@
 
 import SwiftUI
 
-class User: ObservableObject {
-    @Published var firstName = "Bilbo"
-    @Published var lastName = "Baggins"
-}
-
-struct SecondView: View {
-    var name: String
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        VStack {
-            Text(name)
-            Button("Dismiss") {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
-    }
-}
-
 struct ContentView: View {
-    @ObservedObject private var user = User()
-    @State private var showingSheet = false
-    @State private var numbers = [Int]()
-    @State private var currentNumber = 1
+    @ObservedObject private var expenses = Expenses()
+    @State private var showingAddExpense = false
     
     var body: some View {
-        VStack {
-            Text("Name is : \(user.firstName) \(user.lastName)")
-            TextField("Firstname", text: $user.firstName)
-            TextField("Lastname", text: $user.lastName)
-            
+        NavigationView {
             List {
-                ForEach(numbers, id: \.self) {
-                    Text("\($0)")
+                ForEach(expenses.items) { item in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.headline)
+                            
+                            Text(item.type)
+                        }
+                        
+                        Spacer()
+                        
+                        Text("$\(item.amount)")
+                    }
                 }
-                .onDelete(perform: removeRows)
-                
-                Button("Add Number") {
-                    self.numbers.append(self.currentNumber)
-                    self.currentNumber += 1
+                .onDelete(perform: removeItems)
+            }
+            .navigationBarTitle("iExpense")
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.showingAddExpense = true
+                }) {
+                    Image(systemName: "plus")
                 }
-            }
-            
-            Button("Tap me") {
-                self.showingSheet.toggle()
-            }
-            .sheet(isPresented: $showingSheet) {
-                SecondView(name: "@code4mobile")
+            )
+            .sheet(isPresented: $showingAddExpense) {
+                AddView(expenses: self.expenses)
             }
         }
     }
     
-    func removeRows(at offsets: IndexSet) {
-        numbers.remove(atOffsets: offsets)
+    func removeItems(at offsets: IndexSet) {
+        expenses.items.remove(atOffsets: offsets)
     }
 }
 
