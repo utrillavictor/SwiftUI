@@ -10,6 +10,14 @@ import SwiftUI
 
 struct AstronautView: View {
     let astronaut: Astronaut
+    var flewMissions: [String]
+    
+    init(astronaut: Astronaut) {
+        self.astronaut = astronaut
+        
+        let missions: [Mission] = Bundle.main.decode("missions.json")
+        flewMissions = missions.compactMap { $0.getMissionFlew(by: astronaut.id) }
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,6 +32,10 @@ struct AstronautView: View {
                         .foregroundColor(.primary)
                         .padding()
                         .layoutPriority(1)
+                    
+                    ForEach(self.flewMissions, id: \.self) { mission in
+                        Text(mission)
+                    }
                 }
             }
         }

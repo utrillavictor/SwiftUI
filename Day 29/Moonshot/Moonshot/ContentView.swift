@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
     let mission: [Mission] = Bundle.main.decode("missions.json")
+    @State private var toggleList = false
     
     var body: some View {
         NavigationView {
@@ -26,13 +27,25 @@ struct ContentView: View {
                         Text(mission.displayName)
                             .font(.headline)
                         
-                        Text(mission.formattedLaunchDate)
+                        if self.toggleList {
+                            ForEach(mission.crew, id: \.role) { crew in
+                                Text(crew.name)
+                            }
+                        } else {
+                            Text(mission.formattedLaunchDate)
+                        }
                     }
                     
                     Spacer()
                 }
             }
             .navigationBarTitle("Moonshot", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.toggleList.toggle()
+                }) {
+                    Image(systemName: "line.horizontal.3.decrease.circle")
+                })
         }
     }
 }

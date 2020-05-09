@@ -36,4 +36,12 @@ struct Mission: Codable, Identifiable {
             return "N/A"
         }
     }
+    
+    func getMissionFlew(by astronaut: String) -> String? {
+        let flewOn = crew.first(where: { member in
+            member.name == astronaut
+        })
+        guard flewOn != nil else { return nil }
+        return displayName
+    }
 }
