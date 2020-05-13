@@ -47,6 +47,10 @@ struct Triangle: Shape {
 struct ContentView: View {
     var body: some View {
         Group {
+            Capsule()
+                .strokeBorder(ImagePaint(image: Image("person"), scale: 0.1), lineWidth: 20)
+                .frame(width: 300, height: 200)
+            
             Path { path in
                 path.move(to: CGPoint(x: 200, y: 100))
                 path.addLine(to: CGPoint(x: 100, y: 300))
