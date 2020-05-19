@@ -100,7 +100,74 @@ struct Triangle: Shape {
     }
 }
 
+struct Arrow: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.midX / 2, y: rect.maxY / 2))
+        path.addLine(to: CGPoint(x: rect.midX + rect.midX / 2, y: rect.maxY / 2))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        
+        return path
+    }
+}
+
+struct ColorCyclingRectangle: View {
+    var amount = 0.0
+    var steps = 100
+
+    var body: some View {
+        ZStack {
+            ForEach(0..<steps) { value in
+                Rectangle()
+                    .inset(by: CGFloat(value))
+                    .strokeBorder(LinearGradient(gradient:
+                        Gradient(colors: [
+                            self.color(for: value, brightness: 1),
+                            self.color(for: value, brightness: 0.5)
+                        ]), startPoint: .top, endPoint: .bottom), lineWidth: 2)
+            }
+        }
+        .drawingGroup()
+    }
+
+    func color(for value: Int, brightness: Double) -> Color {
+        var targetHue = Double(value) / Double(self.steps) + self.amount
+        if targetHue > 1 {
+            targetHue -= 1
+        }
+
+        return Color(hue: targetHue, saturation: 1, brightness: brightness)
+    }
+}
+
 struct ContentView: View {
+    @State private var thickness: CGFloat = 10.0
+    @State private var animate = false
+    @State private var colorCycle = 0.0
+    
+    var body: some View {
+        VStack {
+            ColorCyclingRectangle(amount: self.colorCycle)
+                .frame(width: 300, height: 300)
+
+            Slider(value: $colorCycle)
+            
+            Arrow()
+                .stroke(Color.blue, style: StrokeStyle(lineWidth: thickness, lineCap: .round, lineJoin: .round))
+                .frame(width: 250, height: 200)
+                .onTapGesture {
+                    withAnimation {
+                        self.animate.toggle()
+                        self.thickness = self.animate ? 50.0 : 10.0
+                    }
+                }
+        }
+    }
+}
+
+struct TestView: View {
     var body: some View {
         Group {
             Capsule()
@@ -129,6 +196,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        TrapezoidContentView()
+        ContentView()
     }
 }
