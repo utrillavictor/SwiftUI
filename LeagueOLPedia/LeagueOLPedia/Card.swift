@@ -99,6 +99,6 @@ struct Card: View {
 
 struct Card_Previews: PreviewProvider {
     static var previews: some View {
-        Card(data: Player(powers: [0.5, 0.4, 0.1], image: "player2", name: "Yoshi", color: Color("Color2")))
+        Card(data: Player(powers: [0.5, 0.4, 0.1], image: "player2", name: "Yoshi", color: Color("Color2"), lore: ""))
     }
 }

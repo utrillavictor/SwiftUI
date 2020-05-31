@@ -49,6 +49,17 @@ struct Detail: View {
                 .background(Color.white.opacity(0.2))
                 .cornerRadius(30)
             
+            Text(self.data.name)
+                .fontWeight(.bold)
+                .font(.system(size: 50))
+                .foregroundColor(.white)
+                .padding(.top)
+            
+            Text(self.data.lore)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.white)
+                .padding(.top)
+            
             Spacer()
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color("Color2"), Color("Color3")]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
@@ -60,6 +71,6 @@ struct Detail: View {
 
 struct Detail_Previews: PreviewProvider {
     static var previews: some View {
-        Detail(data: Player(powers: [0.5, 0.4, 0.1], image: "player2", name: "Yoshi", color: Color("Color2")))
+        Detail(data: Player(powers: [0.5, 0.4, 0.1], image: "player2", name: "Yoshi", color: Color("Color2"), lore: ""))
     }
 }
