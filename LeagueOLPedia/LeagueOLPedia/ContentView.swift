@@ -23,6 +23,12 @@ var data = [
     Player(powers: [0.3, 0.6, 0.5], image: "player2", name: "Annie", color: Color("Color1"), lore: "Believing most city adults to be like her stepmother, Annie has kept to the wilder parts of her frontier homeland. On occasion, she will use her disarmingly adorable exterior to be taken in by some pioneer family long enough to be offered new clothes and a hot meal. However, fire and death awaits anyone foolish enough to try parting Annie from the stuffed bear at her side.")
 ]
 
+class Host: UIHostingController<ContentView> {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+}
+
 struct ContentView: View {
     var body: some View {
         NavigationView {

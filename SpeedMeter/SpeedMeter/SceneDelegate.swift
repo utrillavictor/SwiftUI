@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  LeagueOLPedia
+//  SpeedMeter
 //
-//  Created by Victor Cordero Utrilla on 5/28/20.
+//  Created by Victor Cordero Utrilla on 6/1/20.
 //  Copyright © 2020 Victor Cordero Utrilla. All rights reserved.
 //
 
@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = Host(rootView: contentView)
+            window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
         }
